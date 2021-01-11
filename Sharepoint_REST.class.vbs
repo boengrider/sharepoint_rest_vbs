@@ -56,7 +56,7 @@ Class SharePoint
 		sClientSecret = strClientSecret
 		sTenantName = strTenantName
 		sMSonlineUrl = Replace(sMSonlineUrl,"[yourtenant]",sTenantName)
-		GetTenantRealmID_vti
+		GetTenantRealmID
 		
 		Select Case GetTenantRealmID 
 		
@@ -252,7 +252,31 @@ Class SharePoint
 		 	Exit Function
 		 End If 
 		 
-	End Function 
+	End Function
+	
+	
+	'*************** ListDelete() ********************
+	' Function deletes the specified list
+	'***********************************************
+	Public Function ListDelete(strListName)
+	
+		With oHTTP
+			.open "POST", sSiteUrl & "_api/web/lists/GetByTitle('" & strListName & "')", False
+			.setRequestHeader "Authorization","Bearer " & sSecurityToken
+			.setRequestHeader "If-Match","*"
+			.setRequestHeader "X-RequestDigest",sXRequestDigest
+			.setRequestHeader "X-HTTP-Method","DELETE"
+			.send
+		End With
+		
+		If oHTTP.status = 200 Then
+			ListDelete = 0
+			Exit Function
+		End If 
+		
+		ListDelete = oHTTP.status
+		
+	End Function
 	
 	
 	
