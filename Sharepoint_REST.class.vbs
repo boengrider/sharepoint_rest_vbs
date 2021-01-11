@@ -58,7 +58,7 @@ Class SharePoint
 		sMSonlineUrl = Replace(sMSonlineUrl,"[yourtenant]",sTenantName)
 		GetTenantRealmID_vti
 		
-		Select Case GetTenantRealmID_vti 
+		Select Case GetTenantRealmID 
 		
 			Case 0 ' Both GUIDs are OK
 				
@@ -84,7 +84,7 @@ Class SharePoint
 		
 		Select Case GetXRequestDigest ' So far the last step in the initialization phase
 		
-			Case 0 ' XReguestDigest OK
+			Case 0 ' XRequestDigest OK
 				Init = 0
 				Exit function
 			Case 1 ' HTTP ok but no digest found
@@ -96,14 +96,14 @@ Class SharePoint
 		
 	End Function
 	
-	'****************** GetTenantRealmID_vti() *******************
+	'****************** GetTenantRealmID() *******************
 	' Function obtains two values needed for securing a security
 	' token at later point:
 	' Tenant/Realm ID 
 	' Client/Resource ID
 	' Function returns 0 if successfull, positive number otherwise
 	'*************************************************************
-	Private Function GetTenantRealmID_vti 
+	Private Function GetTenantRealmID
 	
 		Dim retval : retval = 0
 		Dim colAVPs,avp,colMatches,temp
@@ -152,6 +152,7 @@ Class SharePoint
 	' Function obtains a security token
 	' Token is usually valid for 24 hours
 	' Token is used for authroziation purposes
+	'**************************************************************
 	Private Function GetSecurityToken
 	
 		Dim part,colParts,tokens,token,strBody,colAVPs
@@ -190,6 +191,7 @@ Class SharePoint
 	
 	'****************** GetXRequestDigest() ************************
 	' Function obtains XReguestDigestValue aka FormDigestValue
+	'***************************************************************
 	Private Function GetXRequestDigest()
 	
 		Dim colMatches
@@ -230,6 +232,7 @@ Class SharePoint
 	' Function creates a new list if it doesn't exist
 	' If the list already exists function overwrites 
 	' the existing one, i.e. deletes the old one
+	'**************************************************
 	Public Function ListCreate(strListName,strListDescription)
 		 
 		 Dim strRequest : strRequest = "{""__metadata"": { ""type"": ""SP.List"" }, ""BaseTemplate"":""100"", ""Description"": """ & strListDescription & """, ""Title"":""" & strListName & """ }"
@@ -307,9 +310,16 @@ End Class
 
 
 Dim oSP : Set oSP = New SharePoint
-oSP.Init "https://volvogroup.sharepoint.com/sites/unit-rc-sk-bs-it","volvogroup","462ad7ed-2e5e-4175-b808-18c6f33fadd7","dWHEl4AMp8qHX/oxeFcY4RyFJJRD7z1cIavjDH53yIE="
+' Initialize object:
+'	1st argument -> Sharepoint site URL
+'       2nd argument -> Tenant name or host part of the subdomain
+'	3rd argument -> ClientID 
+'	4th argument -> Client secret
+oSP.Init "https://volvogroup.sharepoint.com/sites/unit-rc-sk-bs-it","volvogroup","462ad7ed-XXXX-XXXX-b808-18c6f33fadd7","dWHEl4AMp8qHX/oFFFcY4RyFJJRD7z1cIavjDH53yIE="
+' Create two lists:
+' 	1st argument -> List name
+' 	2nd argument -> List description
 oSP.ListCreate "SharePointList#1","Created using SharepointClass"
-WScript.Sleep 5000
 oSP.ListCreate "SharePointList#2","Created using SharepointClass"
 
 
