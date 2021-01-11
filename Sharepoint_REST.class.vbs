@@ -103,7 +103,7 @@ Class SharePoint
 	' Client/Resource ID
 	' Function returns 0 if successfull, positive number otherwise
 	'*************************************************************
-	Private Function GetTenantRealmID
+	Private Function GetTenantRealmID()
 	
 		Dim retval : retval = 0
 		Dim colAVPs,avp,colMatches,temp
@@ -153,7 +153,7 @@ Class SharePoint
 	' Token is usually valid for 24 hours
 	' Token is used for authroziation purposes
 	'**************************************************************
-	Private Function GetSecurityToken
+	Private Function GetSecurityToken()
 	
 		Dim part,colParts,tokens,token,strBody,colAVPs
 		strBody = "grant_type=client_credentials&client_id=" & sClientID & "@" & sTenantRealmID & "&client_secret=" & sClientSecret & "&resource=" & sResourceID & "/volvogroup.sharepoint.com@" & sTenantRealmID
