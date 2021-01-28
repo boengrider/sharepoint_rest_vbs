@@ -144,7 +144,7 @@ Class SharePoint
 			Next 
 		End If 
 		
-		GetTenantRealmID_vti = retval ' Error of some kind
+		GetTenantRealmID = retval ' Error of some kind
 		
 	End Function  
 	
