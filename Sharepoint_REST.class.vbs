@@ -1,3 +1,19 @@
+'Dim oSP : Set oSP = New SharePoint
+'' Initialize object:
+''	1st argument -> Sharepoint site URL
+''       2nd argument -> Tenant name or host part of the subdomain
+''	3rd argument -> ClientID 
+''	4th argument -> Client secret
+'oSP.Init "https://volvogroup.sharepoint.com/sites/unit-rc-sk-bs-it","volvogroup","462ad7ed-XXXX-XXXX-b808-18c6f33fadd7","dWHEl4AMp8qHX/oFFFcY4RyFJJRD7z1cIavjDH53yIE="
+'' Create two lists:
+'' 	1st argument -> List name
+'' 	2nd argument -> List description
+'oSP.ListCreate "SharePointList#1","Created using SharepointClass"
+'oSP.ListCreate "SharePointList#2","Created using SharepointClass"
+
+'######################################
+'########## SharePoint class ##########
+'######################################
 Class SharePoint
 	
 	Private sClientID ' Provided by the user. You need to register an app on sharepoint
@@ -331,21 +347,3 @@ Class SharePoint
 	End Property 
 	
 End Class
-
-
-Dim oSP : Set oSP = New SharePoint
-' Initialize object:
-'	1st argument -> Sharepoint site URL
-'       2nd argument -> Tenant name or host part of the subdomain
-'	3rd argument -> ClientID 
-'	4th argument -> Client secret
-oSP.Init "https://volvogroup.sharepoint.com/sites/unit-rc-sk-bs-it","volvogroup","462ad7ed-XXXX-XXXX-b808-18c6f33fadd7","dWHEl4AMp8qHX/oFFFcY4RyFJJRD7z1cIavjDH53yIE="
-' Create two lists:
-' 	1st argument -> List name
-' 	2nd argument -> List description
-oSP.ListCreate "SharePointList#1","Created using SharepointClass"
-oSP.ListCreate "SharePointList#2","Created using SharepointClass"
-
-
-	
-		
